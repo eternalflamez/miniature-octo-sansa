@@ -8,8 +8,14 @@ package woordenapplicatie.gui;
 
 
 
+import java.lang.reflect.Array;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.TreeSet;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -26,7 +32,7 @@ public class WoordenController implements Initializable {
    private static final String DEFAULT_TEXT =   "Een, twee, drie, vier\n" +
                                                 "Hoedje van, hoedje van\n" +
                                                 "Een, twee, drie, vier\n" +
-                                                "Hoedje van papier"; /*\n" +
+                                                "Hoedje van papier\n" +
                                                 "\n" +
                                                 "Heb je dan geen hoedje meer\n" +
                                                 "Maak er één van bordpapier\n" +
@@ -41,7 +47,7 @@ public class WoordenController implements Initializable {
                                                 "En als het hoedje dan niet past\n" +
                                                 "Zetten we 't in de glazenkas\n" +
                                                 "Een, twee, drie, vier\n" +
-                                                "Hoedje van papier";*/
+                                                "Hoedje van papier";
     
     @FXML
     private Button btAantal;
@@ -63,27 +69,40 @@ public class WoordenController implements Initializable {
     
     @FXML
     private void aantalAction(ActionEvent event) {
-        int spaces = DEFAULT_TEXT.length() - DEFAULT_TEXT.replace(" ", "").length();
+        String[] words = splitWords();
         
-        String[] lines = DEFAULT_TEXT.split("\n");
-        int enters = lines.length;
+        String woordenText = "Totaal aantal woorden: \t\t\t" + words.length + "\n";
         
-        int words = spaces + enters;
+        Set<String> uniqKeys = new TreeSet<String>();
+        uniqKeys.addAll(Arrays.asList(words));
         
-        String woordenText = "Totaal aantal woorden: \t\t\t" + words;
+        woordenText += "Aantal verschillende woorden: \t" + uniqKeys.size();
         
         taOutput.setText(woordenText);
-        /*
-        Integer[] numbers = {1, 1, 2, 1, 3, 4, 5};
-        Set<Integer> uniqKeys = new TreeSet<Integer>();
-        uniqKeys.addAll(Arrays.asList(numbers));
-        System.out.println("uniqKeys: " + uniqKeys);
-                */
     }
 
     @FXML
     private void sorteerAction(ActionEvent event) {
-         throw new UnsupportedOperationException("Not supported yet."); 
+        String[] words = splitWords();
+        
+        Set<String> uniqKeys = new TreeSet<String>();
+        uniqKeys.addAll(Arrays.asList(words));
+        
+        words = uniqKeys.toArray(new String[0]);
+        
+        List<String> wordList = Arrays.asList(words);
+        wordList.sort(String.CASE_INSENSITIVE_ORDER);
+        
+        Collections.reverse(wordList);
+        
+        String output = "";
+        
+        for(String s : words)
+        {
+            output += s + "\n";
+        }
+        
+        taOutput.setText(output);
     }
 
     @FXML
@@ -96,4 +115,14 @@ public class WoordenController implements Initializable {
          throw new UnsupportedOperationException("Not supported yet."); 
     }
    
+    private String[] splitWords()
+    {
+        String stripped = DEFAULT_TEXT.replace("\n", " ");
+        stripped = stripped.replace("  ", " ");
+        stripped = stripped.replace(",", "");
+        stripped = stripped.toLowerCase();
+        
+        String[] words = stripped.split(" ");
+        return words;
+    }
 }
