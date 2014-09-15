@@ -152,8 +152,65 @@ public class WoordenController implements Initializable {
     
 
     @FXML
-    private void concordatieAction(ActionEvent event) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    private void concordatieAction(ActionEvent event) 
+    {
+        String text = DEFAULT_TEXT.toLowerCase();
+        String[] lines = text.split("\n");
+        String[][] textArr = new String[20][20];
+        
+        int count = 0;
+        for(int i = 0; i < lines.length; i++)
+        {
+            String[] split = lines[i].split(" ");
+            if(split.length != 0)
+            {
+                textArr[count] = split;
+                count++;
+            }
+        }
+        
+        Map<String, ArrayList<Integer>> multiMap = new HashMap<String, ArrayList<Integer>>();
+        
+        for (int i = 0; i < textArr.length; i++) 
+        {
+            for (int j = 0; j < textArr[i].length; j++) 
+            {
+                ArrayList<Integer> old = multiMap.get(textArr[i][j]);
+                
+                if(old == null)
+                {
+                    old = new ArrayList<Integer>();
+                }
+                
+                old.add(i);
+                multiMap.put(textArr[i][j], old);
+            }
+        }
+        
+        String output = "";
+        Iterator it = multiMap.entrySet().iterator();
+        while(it.hasNext())
+        {
+            Map.Entry pairs = (Map.Entry)it.next();
+            output += pairs.getKey() + "[";
+            
+            ArrayList<Integer> values = (ArrayList<Integer>)pairs.getValue();
+            int c = 0;
+            for(int i : values)
+            {
+                if(c != 0)
+                {
+                    output += ", ";
+                }
+                c++;
+                
+                output += i;
+            }
+            
+            output += "] \n";
+        }
+        
+        taOutput.setText(output);
     }
 
     private HashMap getUnique() {
