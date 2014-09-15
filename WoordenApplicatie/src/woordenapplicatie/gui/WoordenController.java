@@ -114,13 +114,8 @@ public class WoordenController implements Initializable {
     @FXML
     private void frequentieAction(ActionEvent event) {
 
-        Object[] uniekwoorden = getUnique();
-        ArrayList<Pair> aantal = new ArrayList();
-        HashMap aantallen = new HashMap();
+        HashMap aantallen = getUnique();
 
-        for (Object s : uniekwoorden) {
-            aantallen.put(s, 0);
-        }
         String[] woorden = splitWords();
         
         for(String s:woorden){
@@ -161,13 +156,13 @@ public class WoordenController implements Initializable {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    private Object[] getUnique() {
+    private HashMap getUnique() {
         HashMap uniqKeys = new HashMap();
         String[] woorden = splitWords();
         for (int i = 0; i < woorden.length; i++) {
-            uniqKeys.put(woorden[i], i);
+            uniqKeys.put(woorden[i], 0);
         }
-        return uniqKeys.keySet().toArray();
+        return uniqKeys;
     }
 
     /**
