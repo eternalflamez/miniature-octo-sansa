@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -92,24 +93,23 @@ public class WoordenController implements Initializable {
     @FXML
     private void sorteerAction(ActionEvent event) {
         String[] words = splitWords();
-        Arrays.sort(words);
 
-        Set<String> uniqKeys = new TreeSet<String>();
-        uniqKeys.addAll(Arrays.asList(words));
-
-        words = uniqKeys.toArray(new String[0]);
-
-        List<String> wordList = Arrays.asList(words);
-        wordList.sort(String.CASE_INSENSITIVE_ORDER);
-
-        Collections.reverse(wordList);
-
-        String output = "";
-
-        for (String s : words) {
-            output += s + "\n";
+        HashMap hm = new HashMap();
+        
+        for (int i = 0; i < words.length; i++) 
+        {
+            hm.put(words[i], i);
         }
-
+        
+        String output = "";
+        Iterator it = hm.entrySet().iterator();
+        
+        while(it.hasNext())
+        {
+            Map.Entry pairs = (Map.Entry)it.next();
+            output += pairs.getKey() + "\n";
+        }
+        
         taOutput.setText(output);
     }
 
@@ -176,7 +176,8 @@ public class WoordenController implements Initializable {
      * Filters all the words and puts them in an array.
      * @return An array containing all the words from the text.
      */
-    private String[] splitWords() {
+    private String[] splitWords() 
+    {
         String stripped = DEFAULT_TEXT.replace("\n", " ");
         stripped = stripped.replace("  ", " ");
         stripped = stripped.replace(",", "");
