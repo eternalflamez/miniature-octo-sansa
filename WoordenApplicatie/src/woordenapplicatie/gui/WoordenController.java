@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -76,10 +77,14 @@ public class WoordenController implements Initializable {
 
         String woordenText = "Totaal aantal woorden: \t\t\t" + words.length + "\n";
 
-        Set<String> uniqKeys = new TreeSet<String>();
-        uniqKeys.addAll(Arrays.asList(words));
-
-        woordenText += "Aantal verschillende woorden: \t" + uniqKeys.size();
+        HashMap hm = new HashMap();
+        
+        for (int i = 0; i < words.length; i++) 
+        {
+            hm.put(words[i], i);
+        }
+        
+        woordenText += "Aantal verschillende woorden: \t" + hm.size();
 
         taOutput.setText(woordenText);
     }
@@ -87,6 +92,7 @@ public class WoordenController implements Initializable {
     @FXML
     private void sorteerAction(ActionEvent event) {
         String[] words = splitWords();
+        Arrays.sort(words);
 
         Set<String> uniqKeys = new TreeSet<String>();
         uniqKeys.addAll(Arrays.asList(words));
@@ -166,6 +172,10 @@ public class WoordenController implements Initializable {
         return uniqKeys.toArray(new String[0]);
     }
 
+    /**
+     * Filters all the words and puts them in an array.
+     * @return An array containing all the words from the text.
+     */
     private String[] splitWords() {
         String stripped = DEFAULT_TEXT.replace("\n", " ");
         stripped = stripped.replace("  ", " ");
