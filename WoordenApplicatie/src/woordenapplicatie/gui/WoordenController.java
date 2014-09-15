@@ -156,26 +156,24 @@ public class WoordenController implements Initializable {
     {
         String text = DEFAULT_TEXT.toLowerCase();
         String[] lines = text.split("\n");
-        String[][] textArr = new String[20][20];
+        ArrayList<String[]> textArr = new ArrayList<String[]>();
         
-        int count = 0;
         for(int i = 0; i < lines.length; i++)
         {
             String[] split = lines[i].split(" ");
-            if(split.length != 0)
+            if(split.length != 1)
             {
-                textArr[count] = split;
-                count++;
+                textArr.add(split);
             }
         }
         
         Map<String, ArrayList<Integer>> multiMap = new HashMap<String, ArrayList<Integer>>();
         
-        for (int i = 0; i < textArr.length; i++) 
+        for (int i = 0; i < textArr.size(); i++) 
         {
-            for (int j = 0; j < textArr[i].length; j++) 
+            for (int j = 0; j < textArr.get(i).length; j++) 
             {
-                ArrayList<Integer> old = multiMap.get(textArr[i][j]);
+                ArrayList<Integer> old = multiMap.get(textArr.get(i)[j]);
                 
                 if(old == null)
                 {
@@ -183,7 +181,7 @@ public class WoordenController implements Initializable {
                 }
                 
                 old.add(i);
-                multiMap.put(textArr[i][j], old);
+                multiMap.put(textArr.get(i)[j], old);
             }
         }
         
