@@ -93,7 +93,6 @@ public class WoordenController implements Initializable {
     @FXML
     private void sorteerAction(ActionEvent event) {
         String[] words = splitWords();
-
         HashMap hm = new HashMap();
         
         for (int i = 0; i < words.length; i++) 
@@ -101,13 +100,14 @@ public class WoordenController implements Initializable {
             hm.put(words[i], i);
         }
         
-        String output = "";
-        Iterator it = hm.entrySet().iterator();
+        Object[] uniqueWords = hm.keySet().toArray();
+        Arrays.sort(uniqueWords);
         
-        while(it.hasNext())
+        String output = "";
+        
+        for (int i = uniqueWords.length - 1; i >= 0; i--) 
         {
-            Map.Entry pairs = (Map.Entry)it.next();
-            output += pairs.getKey() + "\n";
+            output += uniqueWords[i] + "\n";
         }
         
         taOutput.setText(output);
