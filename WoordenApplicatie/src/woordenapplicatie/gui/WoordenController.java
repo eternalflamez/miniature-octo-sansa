@@ -143,7 +143,7 @@ public class WoordenController implements Initializable {
         @Override
         public int compare(Entry<String, Integer> o1, Entry<String, Integer> o2) {
             if(o1.getValue().equals(o2.getValue())){
-                return o1.getKey().compareTo(o2.getKey())*-1;
+                return o2.getKey().compareTo(o1.getKey());
             }
             return o1.getValue().compareTo(o2.getValue());
         }
