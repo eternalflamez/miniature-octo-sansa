@@ -5,24 +5,16 @@ package woordenapplicatie.gui;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import java.lang.reflect.Array;
 import java.net.URL;
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Random;
 import java.util.ResourceBundle;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeMap;
-import java.util.TreeSet;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -131,6 +123,7 @@ public class WoordenController implements Initializable {
         
         Collections.sort(totaal2,new ValueComparator());
         Collections.reverse(totaal2);
+        
         for (Entry s : totaal2) {
 
             output += s.getKey() + " " + s.getValue() + "\n";
