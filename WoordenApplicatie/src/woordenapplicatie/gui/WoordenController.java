@@ -17,6 +17,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
@@ -113,7 +114,7 @@ public class WoordenController implements Initializable {
 
     @FXML
     private void frequentieAction(ActionEvent event) {
-
+        
         HashMap aantallen = getUnique();
 
         String[] woorden = splitWords();
@@ -148,9 +149,7 @@ public class WoordenController implements Initializable {
             return o1.getValue().compareTo(o2.getValue());
         }
     }
-
     
-
     @FXML
     private void concordatieAction(ActionEvent event) 
     {
@@ -190,7 +189,7 @@ public class WoordenController implements Initializable {
         while(it.hasNext())
         {
             Map.Entry pairs = (Map.Entry)it.next();
-            output += pairs.getKey() + "[";
+            output += pairs.getKey() + " [";
             
             ArrayList<Integer> values = (ArrayList<Integer>)pairs.getValue();
             int c = 0;
